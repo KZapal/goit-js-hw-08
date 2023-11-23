@@ -6,10 +6,12 @@ form.addEventListener(
   `input`,
   throttle(event => {
     const dane = {
-      email: form.email.value,
+      mail: form.email.value,
       message: form.message.value,
     };
-    localStorage.setItem(`feedback-form-state`, JSON.stringify(dane));
+    if (dane) {
+      localStorage.setItem(`feedback-form-state`, JSON.stringify(dane));
+    }
   }, 500)
 );
 
@@ -24,5 +26,7 @@ form.addEventListener(`submit`, event => {
 });
 
 let obj = JSON.parse(localStorage.getItem(`feedback-form-state`));
-form.email.textContent = obj.email;
-form.message.textContent = obj.message;
+if (obj) {
+  form.email.value = obj.mail;
+  form.message.value = obj.message;
+}
